@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Dashboard — LeadBack</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<nav>
+  <strong>LeadBack</strong>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/leads">Leads</a>
+  <a href="/setup">Setup</a>
+  <a sec:authorize="hasRole('ADMIN')" href="/admin">Admin</a>
+  <form th:action="@{/logout}" method="post" style="margin-left:auto">
+    <button class="btn-danger" type="submit">Logout</button>
+  </form>
+</nav>
+<main>
+  <h1 th:text="${business.name}"></h1>
+  <p class="muted">
+    Status: <strong th:text="${business.subscriptionStatus}"></strong>
+    &nbsp;|&nbsp; Twilio number:
+    <strong th:text="${business.twilioNumber ?: 'not set'}"></strong>
+  </p>
+
+  <div class="grid">
+    <div class="card"><h2>Leads</h2><p th:text="${leadCount}"></p></div>
+    <div class="card">
+      <h2>Upgrade</h2>
+      <a class="btn" href="/billing/checkout">Subscribe</a>
+    </div>
+    <div class="card">
+      <h2>Setup</h2>
+      <a class="btn" href="/setup">Configure number</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
