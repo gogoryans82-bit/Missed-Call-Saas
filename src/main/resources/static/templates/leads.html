@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Leads — LeadBack</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<nav>
+  <strong>LeadBack</strong>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/leads">Leads</a>
+  <a href="/setup">Setup</a>
+</nav>
+<main>
+  <h1>Leads</h1>
+
+  <div class="card" th:if="${#lists.isEmpty(leads)}">
+    <p class="muted">No leads yet. They will appear here when callers respond.</p>
+  </div>
+
+  <table th:unless="${#lists.isEmpty(leads)}">
+    <thead>
+      <tr>
+        <th>Time</th><th>Phone</th><th>Name</th><th>Service</th>
+        <th>Address</th><th>Urgency</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="l : ${leads}">
+        <td th:text="${l.createdAt}"></td>
+        <td th:text="${l.phone}"></td>
+        <td th:text="${l.name}"></td>
+        <td th:text="${l.service}"></td>
+        <td th:text="${l.address}"></td>
+        <td th:text="${l.urgency}"></td>
+        <td th:text="${l.status}"></td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>
