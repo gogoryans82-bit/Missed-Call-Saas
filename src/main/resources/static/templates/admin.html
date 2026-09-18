@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Admin — LeadBack</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<nav>
+  <strong>LeadBack Admin</strong>
+  <a href="/dashboard">Dashboard</a>
+  <form th:action="@{/logout}" method="post" style="margin-left:auto">
+    <button class="btn-danger" type="submit">Logout</button>
+  </form>
+</nav>
+<main>
+  <h1>All businesses</h1>
+  <p class="muted">Total leads in system: <strong th:text="${totalLeads}"></strong></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Email</th><th>Owner phone</th>
+        <th>Twilio #</th><th>Status</th><th>Onboarded</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="b : ${businesses}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.name}"></td>
+        <td th:text="${b.email}"></td>
+        <td th:text="${b.ownerPhone}"></td>
+        <td th:text="${b.twilioNumber}"></td>
+        <td th:text="${b.subscriptionStatus}"></td>
+        <td th:text="${b.onboardingComplete}"></td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>
