@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Setup — LeadBack</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<nav>
+  <strong>LeadBack</strong>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/leads">Leads</a>
+  <a href="/setup">Setup</a>
+</nav>
+<main>
+  <h1>Connect your Twilio number</h1>
+
+  <div class="flash ok" th:if="${msg}" th:text="${msg}"></div>
+  <div class="flash err" th:if="${error}" th:text="${error}"></div>
+
+  <div class="card">
+    <h2>Current number</h2>
+    <p th:text="${business.twilioNumber ?: 'None configured'}"></p>
+  </div>
+
+  <div class="card">
+    <h2>Auto-provision (recommended)</h2>
+    <p class="muted">We create a Twilio subaccount and buy a number for you.</p>
+    <form class="stack" th:action="@{/setup/auto}" method="post">
+      <input name="areaCode" placeholder="Area code (e.g. 020 or 415)" required/>
+      <button type="submit">Buy a number for me</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Manual entry</h2>
+    <p class="muted">Already have a Twilio number? Paste it here (E.164 format).</p>
+    <form class="stack" th:action="@{/setup/manual}" method="post">
+      <input name="twilioNumber" placeholder="+254711223344" required/>
+      <button type="submit">Save number</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Point your webhooks</h2>
+    <p class="muted">In Twilio console, set these for the number:</p>
+    <p><strong>Voice URL (POST):</strong> <code>/twilio/voice</code></p>
+    <p><strong>SMS URL (POST):</strong> <code>/twilio/sms</code></p>
+  </div>
+</main>
+</body>
+</html>
